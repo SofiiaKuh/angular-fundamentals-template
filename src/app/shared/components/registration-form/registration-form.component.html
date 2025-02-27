@@ -7,7 +7,7 @@
                 <div class="form__control">
                     <label for="name">Name</label>
                     <input type="text" id="name" formControlName="name" placeholder="Input text" />
-                    <span *ngIf="(f['name'].invalid && (f['name'].touched || submitted))" class="text-danger">
+                    <span *ngIf="(f['name'].invalid && (f['name'].dirty || f['name'].touched || submitted))" class="text-danger">
                         <span *ngIf="f['name'].errors?.['required']">Name is required.</span>
                         <span *ngIf="f['name'].errors?.['minlength']">Name must be at least 6 characters.</span>
                     </span>
@@ -17,7 +17,7 @@
                 <div class="form__control">
                     <label for="email">Email</label>
                     <input type="text" id="email" formControlName="email" emailValidator placeholder="Input text" />
-                    <span *ngIf="(f['email'].invalid && (f['email'].touched || submitted))" class="text-danger">
+                    <span *ngIf="(f['email'].invalid && (f['name'].dirty || f['email'].touched || submitted))" class="text-danger">
                         <span *ngIf="f['email'].errors?.['required']">Email is required.</span>
                         <span *ngIf="f['email'].errors?.['invalidEmail']">Invalid email format.</span>
                     </span>
@@ -27,7 +27,7 @@
                 <div class="form__control">
                     <label for="password">Password</label>
                     <input type="password" id="password" formControlName="password" placeholder="Input text" />
-                    <span *ngIf="(f['password'].invalid && (f['password'].touched || submitted))" class="text-danger">
+                    <span *ngIf="(f['password'].invalid && (f['name'].dirty || f['password'].touched || submitted))" class="text-danger">
                         <span *ngIf="f['password'].errors?.['required']">Password is required.</span>
                         <span *ngIf="f['password'].errors?.['minlength']">Password must be at least 6 characters.</span>
                     </span>

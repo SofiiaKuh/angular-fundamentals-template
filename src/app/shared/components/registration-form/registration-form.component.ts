@@ -22,6 +22,10 @@ export class RegistrationFormComponent implements OnInit {
 
     public onSubmit(): void {
         this.submitted = true;
+        Object.values(this.registrationForm.controls).forEach(control => {
+            control.markAsTouched();
+        });
+
         if (this.registrationForm.valid) {
             console.log('Form Submitted', this.registrationForm.value);
         }
