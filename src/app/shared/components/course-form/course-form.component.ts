@@ -25,7 +25,7 @@ export class CourseFormComponent {
         this.courseForm = this.fb.group({
             title: ['', [Validators.required, Validators.minLength(2)]],
             description: ['', [Validators.required, Validators.minLength(2)]],
-            author: ['', [Validators.pattern('^[a-zA-Z0-9 ]+$')]],
+            author: ['', [Validators.pattern('^[a-zA-Z0-9 ]+$'), Validators.minLength(2)]],
             authors: this.fb.array([]),
             duration: [0, [Validators.required, Validators.min(0)]],
         });
@@ -42,7 +42,7 @@ export class CourseFormComponent {
     addAuthor() {
         if (this.f['author'].valid && this.f['author'].value) {
             this.authors.push(this.fb.control(this.f['author'].value));
-            this.f['author'].setValue('');
+            this.f['author'].reset();
         }
     }
 

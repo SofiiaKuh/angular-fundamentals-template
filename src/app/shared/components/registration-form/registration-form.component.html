@@ -28,8 +28,10 @@
                     <label for="password">Password</label>
                     <input type="password" id="password" formControlName="password" placeholder="Input text" />
                     <span *ngIf="(f['password'].invalid && (f['password'].touched || submitted))" class="text-danger">
-                        Password is required.
+                        <span *ngIf="f['password'].errors?.['required']">Password is required.</span>
+                        <span *ngIf="f['password'].errors?.['minlength']">Password must be at least 6 characters.</span>
                     </span>
+
                 </div>
             </div>
 

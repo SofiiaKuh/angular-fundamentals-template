@@ -15,7 +15,7 @@ export class RegistrationFormComponent implements OnInit {
     ngOnInit(): void {
         this.registrationForm = this.fb.group({
             name: ['', [Validators.required, Validators.minLength(6)]],
-            email: ['', [Validators.required]], // Custom validator will be applied in template
+            email: ['', [Validators.required, Validators.email]], // Custom validator will be applied in template
             password: ['', Validators.required]
         });
     }
