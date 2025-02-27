@@ -33,7 +33,7 @@ const components = [
 ];
 
 @NgModule({
-  declarations: [components],
+  declarations: [...components],
   imports: [
     CommonModule,
     FontAwesomeModule,

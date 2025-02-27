@@ -1,17 +1,10 @@
-<!-- Replace ::text:: with your code -->
-
-<div class="title">::Title::</div>
 <div class="course-info">
-  <div class="course-info__description">
-    ::Description::
-  </div>
-  <div class="course-info__info">
-    <div><b>ID: </b><span class="course-info__info-id">::id::</span></div>
-    <div><b>Duration: </b><span class="course-info__info-duration">::duration::</span></div>
-    <div><b>Created: </b><span class="course-info__info-date">::date::</span></div>
-    <div><b>Authors: </b><span class="course-info__info-authors">::authors::</span></div>
-  </div>
-</div>
-<div class="navigation-block">
-  <!--Enter your code here-->
+    <h2>{{ title }}</h2>
+    <p>{{ description }}</p>
+    <p><strong>ID:</strong> {{ id }}</p>
+    <p><strong>Created:</strong> {{ creationDate | date }}</p>
+    <p><strong>Duration:</strong> {{ duration }} min</p>
+    <p><strong>Authors:</strong> {{ authors.join(', ') }}</p>
+
+    <button (click)="goBack()">Back</button>
 </div>

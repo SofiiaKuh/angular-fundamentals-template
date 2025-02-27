@@ -10,12 +10,22 @@
     color: #fff;
     text-transform: uppercase;
     cursor: pointer;
+    border: none;
+    font-size: 16px;
 
     &:hover {
         background: #016486;
     }
 
-    &__single-icon {
-        padding: 13px;
+    &:focus {
+        outline: 2px solid #005f73;
+    }
+
+    &:active {
+        background: #004d61;
+    }
+
+    fa-icon {
+        font-size: 20px;
     }
 }

@@ -8,6 +8,13 @@ import { NotAuthorizedGuard } from '@app/auth/guards/not-authorized.guard';
 import { AuthorizedGuard } from '@app/auth/guards/authorized.guard';
 import { CoursesStoreService } from '@app/services/courses-store.service';
 import { CoursesService } from '@app/services/courses.service';
+import { CommonModule } from '@angular/common';
+import { ButtonComponent } from './shared/components/button/button.component';
+import { ModalComponent } from './shared/components/modal/modal.component';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import { library } from '@fortawesome/fontawesome-svg-core';
+
+library.add(faXmark);
 
 @NgModule({
   declarations: [AppComponent, CourseInfoComponent],
@@ -17,6 +24,7 @@ import { CoursesService } from '@app/services/courses.service';
     FontAwesomeModule,
   ],
   providers: [AuthorizedGuard, NotAuthorizedGuard, CoursesService, CoursesStoreService],
-  bootstrap: [AppComponent],
+    bootstrap: [AppComponent],
+    exports: [ButtonComponent, ModalComponent, FontAwesomeModule],
 })
 export class AppModule {}
