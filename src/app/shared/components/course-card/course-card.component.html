@@ -1,8 +1,8 @@
 <div class="course-card">
     <h2>{{ title }}</h2>
     <p>{{ description }}</p>
-    <p><strong>Created:</strong> {{ creationDate | date }}</p>
-    <p><strong>Duration:</strong> {{ duration }} min</p>
+    <p><strong>Created:</strong> {{ creationDate | customDate }}</p>
+    <p><strong>Duration:</strong> {{ duration | duration }}</p>
     <p><strong>Authors:</strong> {{ authors.join(', ') }}</p>
 
     <ng-content></ng-content>
