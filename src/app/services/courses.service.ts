@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -36,12 +36,14 @@ export class CoursesService {
         return this.http.delete<void>(`${this.apiUrl}/courses/${id}`);
     }
 
-    // Filter courses based on a search value
     filterCourses(value: string): Observable<any[]> {
         return this.http.get<any[]>(`${this.apiUrl}/courses`, {
             params: { search: value }
-        });
+        }).pipe(
+            map((response: any) => response || []) // Ensure it always returns an array
+        );
     }
+
 
     // Get all authors
     getAllAuthors(): Observable<any[]> {

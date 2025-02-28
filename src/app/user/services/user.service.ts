@@ -11,8 +11,7 @@ export class UserService {
 
     constructor(private http: HttpClient) { }
 
-    // Fetch user data by ID or other parameters
-    getUser(): Observable<any> { // Replace `any` with a specific user model if defined
-        return this.http.get<any>(`${this.apiUrl}/user/profile`); // Adjust URL according to backend
+    getUser(): Observable<any> {
+        return this.http.get<any>(`${this.apiUrl}/user/profile`); 
     }
 }
