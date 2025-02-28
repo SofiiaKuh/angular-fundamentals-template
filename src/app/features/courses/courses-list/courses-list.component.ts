@@ -1,14 +1,8 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { mockedCoursesList } from "src/app/shared/mocks/mocks";
-
-interface Course {
-    id: string;
-    title: string;
-    description: string;
-    creationDate: Date;
-    duration: number;
-    authors: string[];
-}
+import { Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
+import { CoursesService } from 'src/app/services/courses.service';
+import { Course } from 'src/app/models/course.model';
+import { UserStoreService } from 'src/app/user/services/user-store.service';
 
 @Component({
     selector: 'app-course-list',
@@ -16,24 +10,41 @@ interface Course {
     styleUrls: ['./courses-list.component.css']
 })
 export class CourseListComponent {
-    @Input() courses: Course[] = mockedCoursesList.map(course => ({
-        ...course,
-        creationDate: new Date(course.creationDate) 
-    }));    @Input() editable = false;
+    @Input() courses: Course[] = [];
+    @Input() editable = false;
 
-    @Output() showCourse = new EventEmitter<string>();
-    @Output() editCourse = new EventEmitter<string>();
-    @Output() deleteCourse = new EventEmitter<string>();
+    isAdmin: boolean = false;
+
+    constructor(
+        private coursesService: CoursesService,
+        private userService: UserStoreService,
+        private router: Router // Inject Router
+    ) { }
+
+    ngOnInit(): void {
+        this.loadCourses();
+        this.userService.isAdmin$.subscribe((isAdmin) => {
+            this.isAdmin = isAdmin;
+        });
+    }
+
+    loadCourses(): void {
+        this.coursesService.getAll().subscribe((courses: Course[]) => {
+            this.courses = courses;
+        });
+    }
 
     onShowCourse(id: string): void {
-        this.showCourse.emit(id);
+        this.router.navigate([`/courses/${id}`]); // Navigate to course details page
     }
 
     onEditCourse(id: string): void {
-        this.editCourse.emit(id);
+        this.router.navigate([`/courses/edit/${id}`]); // Navigate to edit course page
     }
 
     onDeleteCourse(id: string): void {
-        this.deleteCourse.emit(id);
+        this.coursesService.deleteCourse(id).subscribe(() => {
+            this.loadCourses(); // Refresh course list after deletion
+        });
     }
 }

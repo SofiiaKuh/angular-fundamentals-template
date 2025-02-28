@@ -1,19 +1,34 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { UserService } from './user.service'; // Import your UserService
 
 @Injectable({
     providedIn: 'root'
 })
 export class UserStoreService {
 
-    getUser() {
-        // Add your code here
+    // Private BehaviorSubject to store the admin status
+    private isAdmin$$ = new BehaviorSubject<boolean>(false); // Default value: false
+
+    // Public Observable to expose isAdmin state
+    isAdmin$: Observable<boolean> = this.isAdmin$$.asObservable();
+
+    constructor(private userService: UserService) { }
+
+    // Fetch user data and update the isAdmin status
+    getUser(): void {
+        this.userService.getUser().subscribe({
+            next: (user) => {
+                this.setIsAdmin(user.isAdmin); // Call method to update state
+            },
+            error: () => {
+                this.setIsAdmin(false); // Default to false in case of an error
+            }
+        });
     }
 
-    get isAdmin() {
-        // Add your code here. Get isAdmin$$ value
-    }
-
-    set isAdmin(value: boolean) {
-        // Add your code here. Change isAdmin$$ value
+    // Method to update isAdmin state
+    private setIsAdmin(value: boolean): void {
+        this.isAdmin$$.next(value);
     }
 }

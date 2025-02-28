@@ -14,6 +14,9 @@ import { ModalComponent } from './shared/components/modal/modal.component';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { CoursesModule } from './features/courses/courses.module';
+import { AuthModule } from './auth/auth.module';
+import { HttpClientModule } from '@angular/common/http';
+
 
 //import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
@@ -30,7 +33,9 @@ library.add(faXmark);
       FontAwesomeModule,
 //      RouterModule,
       CoursesModule,
-      AppRoutingModule 
+      AppRoutingModule,
+      AuthModule,
+      HttpClientModule
   ],
   providers: [AuthorizedGuard, NotAuthorizedGuard, CoursesService, CoursesStoreService],
     bootstrap: [AppComponent],

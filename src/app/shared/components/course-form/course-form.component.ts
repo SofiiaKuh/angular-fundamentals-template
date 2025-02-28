@@ -1,24 +1,38 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
     FormArray,
     FormBuilder,
     FormGroup,
     Validators,
 } from '@angular/forms';
-import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
-import { fas } from '@fortawesome/free-solid-svg-icons';
+import { ActivatedRoute, Router } from '@angular/router';
+import { CoursesService } from 'src/app/services/courses.service';
+import { Course } from 'src/app/models/course.model';
 
 @Component({
-  selector: 'app-course-form',
-  templateUrl: './course-form.component.html',
-  styleUrls: ['./course-form.component.scss'],
+    selector: 'app-course-form',
+    templateUrl: './course-form.component.html',
+    styleUrls: ['./course-form.component.scss'],
 })
-export class CourseFormComponent {
+export class CourseFormComponent implements OnInit {
+    courseForm!: FormGroup;
+    courseId: string | null = null; // Store the course ID (for edit mode)
 
-  courseForm!: FormGroup;
-    constructor(public fb: FormBuilder, public library: FaIconLibrary) {
-        library.addIconPacks(fas);
+    constructor(
+        private fb: FormBuilder,
+        private route: ActivatedRoute,
+        private router: Router,
+        private coursesService: CoursesService
+    ) {
         this.initializeForm();
+    }
+
+    ngOnInit(): void {
+        // Check if there's an 'id' in the route for edit mode
+        this.courseId = this.route.snapshot.paramMap.get('id');
+        if (this.courseId) {
+            this.loadCourse();
+        }
     }
 
     private initializeForm() {
@@ -50,9 +64,38 @@ export class CourseFormComponent {
         this.authors.removeAt(index);
     }
 
+    // Load course data if editing
+    private loadCourse() {
+        this.coursesService.getCourse(this.courseId!).subscribe((course: Course) => {
+            this.courseForm.patchValue({
+                title: course.title,
+                description: course.description,
+                duration: course.duration,
+            });
+
+            // Populate authors array
+            this.authors.clear();
+            course.authors.forEach(author => {
+                this.authors.push(this.fb.control(author));
+            });
+        });
+    }
+
     onSubmit() {
         if (this.courseForm.valid) {
-            console.log('Course Data:', this.courseForm.value);
+            const courseData: Course = this.courseForm.value;
+
+            if (this.courseId) {
+                // Update existing course
+                this.coursesService.editCourse(this.courseId, courseData).subscribe(() => {
+                    this.router.navigate(['/courses']); // Redirect after update
+                });
+            } else {
+                // Add new course
+                this.coursesService.createCourse(courseData).subscribe(() => {
+                    this.router.navigate(['/courses']); // Redirect after creation
+                });
+            }
         }
     }
 }

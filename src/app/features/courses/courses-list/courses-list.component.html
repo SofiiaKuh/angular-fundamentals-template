@@ -5,9 +5,9 @@
                      [creationDate]="course.creationDate"
                      [duration]="course.duration"
                      [authors]="course.authors"
-                     [editable]="editable"
-                     (clickOnShow)="onShowCourse(course.id)">
-        <button *ngIf="editable" (click)="onEditCourse(course.id)">Edit</button>
-        <button *ngIf="editable" (click)="onDeleteCourse(course.id)">Remove</button>
+                     [isAdmin]="isAdmin"
+                     (clickOnShow)="onShowCourse(course.id)"
+                     (clickOnEdit)="onEditCourse(course.id)"
+                     (clickOnDelete)="onDeleteCourse(course.id)">
     </app-course-card>
 </div>

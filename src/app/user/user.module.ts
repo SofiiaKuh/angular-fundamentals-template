@@ -14,6 +14,11 @@ import { AdminGuard } from "./guards/admin.guard";
         UserService,
         UserStoreService,
         AdminGuard
+    ], 
+    exports: [
+
+        UserService,
+        UserStoreService
     ]
 })
 export class UserModule { }

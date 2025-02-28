@@ -13,9 +13,21 @@ export class CourseCardComponent {
     @Input() authors!: string[];
     @Input() editable = false;
 
+    @Input() isAdmin: boolean = false; 
+
     @Output() clickOnShow = new EventEmitter<void>();
+    @Output() clickOnEdit = new EventEmitter<void>();
+    @Output() clickOnDelete = new EventEmitter<void>();
 
     onShowCourse(): void {
         this.clickOnShow.emit();
+    }
+
+    onEditCourse(): void { 
+        this.clickOnEdit.emit();
+    }
+
+    onDeleteCourse(): void {
+        this.clickOnDelete.emit();
     }
 }

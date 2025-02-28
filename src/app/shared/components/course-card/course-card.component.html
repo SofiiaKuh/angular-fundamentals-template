@@ -8,6 +8,7 @@
     <ng-content></ng-content>
 
     <button (click)="onShowCourse()">Show Course</button>
-    <button *ngIf="editable">Edit</button>
-    <button *ngIf="editable">Remove</button>
+    <button *ngIf="isAdmin" (click)="onEditCourse()">Edit</button>
+    <button *ngIf="isAdmin" (click)="onDeleteCourse()">Remove</button>
 </div>
+
