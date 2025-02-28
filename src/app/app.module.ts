@@ -13,6 +13,12 @@ import { ButtonComponent } from './shared/components/button/button.component';
 import { ModalComponent } from './shared/components/modal/modal.component';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
+import { CoursesModule } from './features/courses/courses.module';
+
+//import { RouterModule } from '@angular/router';
+import { AppRoutingModule } from './app-routing.module';
+
+
 
 library.add(faXmark);
 
@@ -21,7 +27,10 @@ library.add(faXmark);
   imports: [
     BrowserModule,
     SharedModule,
-    FontAwesomeModule,
+      FontAwesomeModule,
+//      RouterModule,
+      CoursesModule,
+      AppRoutingModule 
   ],
   providers: [AuthorizedGuard, NotAuthorizedGuard, CoursesService, CoursesStoreService],
     bootstrap: [AppComponent],
