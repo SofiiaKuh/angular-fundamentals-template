@@ -4,7 +4,7 @@
     <p><strong>ID:</strong> {{ id }}</p>
     <p><strong>Created:</strong> {{ creationDate | date }}</p>
     <p><strong>Duration:</strong> {{ duration }} min</p>
-    <p><strong>Authors:</strong> {{ authors.join(', ') }}</p>
+    <p><strong>Authors:</strong> {{ authors?.join(', ') }}</p>
 
     <button (click)="goBack()">Back</button>
 </div>

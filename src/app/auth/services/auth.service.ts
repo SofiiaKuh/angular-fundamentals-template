@@ -11,7 +11,7 @@ import { tap } from 'rxjs/operators';
     providedIn: 'root'
 })
 export class AuthService {
-    private readonly apiUrl = `${environment.apiUrl}/auth`; // API URL for authentication
+    private readonly apiUrl = `${environment.apiUrl}`; // API URL for authentication
     private isAuthorized$$ = new BehaviorSubject<boolean>(false); // BehaviorSubject for authorization state
     public isAuthorized$: Observable<boolean> = this.isAuthorized$$.asObservable(); // Expose as an observable
 
@@ -30,7 +30,7 @@ export class AuthService {
     login(user: any): Observable<any> {
         return this.http.post(`${this.apiUrl}/login`, user).pipe(
             tap((response: any) => {
-                const token = response.token; // Assuming the token is in the response
+                const token = response.result;
                 this.setToken(token);
             })
         );

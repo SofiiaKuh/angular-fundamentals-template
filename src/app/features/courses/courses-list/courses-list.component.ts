@@ -29,8 +29,9 @@ export class CourseListComponent {
     }
 
     loadCourses(): void {
-        this.coursesService.getAll().subscribe((courses: Course[]) => {
-            this.courses = courses;
+        this.coursesService.getAll().subscribe((courses: any) => {
+            console.log(courses);
+            this.courses = courses.result;
         });
     }
 

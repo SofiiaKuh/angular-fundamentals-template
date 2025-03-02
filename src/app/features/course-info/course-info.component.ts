@@ -29,8 +29,9 @@ export class CourseInfoComponent implements OnInit {
     }
 
     loadCourseData(courseId: string): void {
-        this.coursesService.getCourse(courseId).subscribe((course: Course) => {
+        this.coursesService.getCourse(courseId).subscribe(({ result: course}: any) => {
             if (course) {
+                console.log(course);
                 this.title = course.title;
                 this.description = course.description;
                 this.creationDate = new Date(course.creationDate);

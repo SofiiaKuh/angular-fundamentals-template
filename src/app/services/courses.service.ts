@@ -7,18 +7,18 @@ import { Observable, map } from 'rxjs';
 })
 export class CoursesService {
 
-    private apiUrl = 'http://localhost:4000/api';
+    private apiUrl = 'http://localhost:4000';
 
     constructor(private http: HttpClient) { }
 
     // Get all courses
     getAll(): Observable<any[]> {
-        return this.http.get<any[]>(`${this.apiUrl}/courses`);
+        return this.http.get<any[]>(`${this.apiUrl}/courses/all`);
     }
 
     // Create a new course
     createCourse(course: any): Observable<any> { // Replace 'any' with the required interface
-        return this.http.post<any>(`${this.apiUrl}/courses`, course);
+        return this.http.post<any>(`${this.apiUrl}/courses/add`, course);
     }
 
     // Edit an existing course
@@ -47,12 +47,12 @@ export class CoursesService {
 
     // Get all authors
     getAllAuthors(): Observable<any[]> {
-        return this.http.get<any[]>(`${this.apiUrl}/authors`);
+        return this.http.get<any[]>(`${this.apiUrl}/authors/all`);
     }
 
     // Create a new author
     createAuthor(name: string): Observable<any> {
-        return this.http.post<any>(`${this.apiUrl}/authors`, { name });
+        return this.http.post<any>(`${this.apiUrl}/authors/add`, { name });
     }
 
     // Get details of a specific author by ID

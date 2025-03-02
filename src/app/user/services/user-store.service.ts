@@ -19,7 +19,7 @@ export class UserStoreService {
     getUser(): void {
         this.userService.getUser().subscribe({
             next: (user) => {
-                this.setIsAdmin(user.isAdmin); // Call method to update state
+                this.setIsAdmin(user.result.isAdmin); // Call method to update state
             },
             error: () => {
                 this.setIsAdmin(false); // Default to false in case of an error
