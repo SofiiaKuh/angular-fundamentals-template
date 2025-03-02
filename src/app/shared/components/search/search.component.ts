@@ -15,16 +15,26 @@ export class SearchComponent {
 
     searchText: string = '';
 
+    duration: string[] = [];
+    creationDate = [];
+    description = [];
+    title = [];
+
     constructor(private coursesService: CoursesService) { }
 
     onSearch(): void {
-        if (!this.searchText.trim()) {
+        if (
+            this.duration.length === 0 &&
+            this.creationDate.length === 0 &&
+            this.description.length === 0 &&
+            this.title.length === 0
+    ) {
             this.coursesService.getAll().subscribe({
                 next: (courses) => this.searchResults.emit(courses),
                 error: (err) => console.error('Error fetching courses:', err)
             });
         } else {
-            this.coursesService.filterCourses(this.searchText).subscribe({
+            this.coursesService.filterCourses(this.duration, this.creationDate, this.description, this.title).subscribe({
                 next: (filteredCourses) => this.searchResults.emit(filteredCourses),
                 error: (err) => console.error('Search failed:', err)
             });

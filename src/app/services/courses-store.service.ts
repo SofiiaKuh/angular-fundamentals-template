@@ -91,9 +91,9 @@ export class CoursesStoreService {
     }
 
     // Filter courses based on a search value
-    filterCourses(value: string): void {
+    filterCourses(duration: string[], creationDate: string[], description: string[], title: string[]): void {
         this.isLoading$$.next(true);
-        this.coursesService.filterCourses(value).subscribe({
+        this.coursesService.filterCourses(duration, creationDate, description, title).subscribe({
             next: (filteredCourses) => {
                 this.courses$$.next(filteredCourses);
                 this.isLoading$$.next(false);
