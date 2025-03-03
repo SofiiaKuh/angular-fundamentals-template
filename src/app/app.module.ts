@@ -16,10 +16,11 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { CoursesModule } from './features/courses/courses.module';
 import { AuthModule } from './auth/auth.module';
 import { HttpClientModule } from '@angular/common/http';
-
-
+import { EffectsModule } from '@ngrx/effects';
+import { reducers, effects } from './store';
 //import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
+import { StoreModule } from '@ngrx/store';
 
 
 
@@ -35,7 +36,9 @@ library.add(faXmark);
       CoursesModule,
       AppRoutingModule,
       AuthModule,
-      HttpClientModule
+      HttpClientModule,
+        StoreModule.forRoot(reducers), 
+      EffectsModule.forRoot(effects)
   ],
   providers: [AuthorizedGuard, NotAuthorizedGuard, CoursesService, CoursesStoreService],
     bootstrap: [AppComponent],

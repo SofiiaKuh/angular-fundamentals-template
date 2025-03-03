@@ -2,7 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { Course } from 'src/app/models/course.model';
 import { ActivatedRoute } from '@angular/router';
-import { CoursesService } from 'src/app/services/courses.service';
+import { CoursesFacade } from 'src/app/store/courses/courses.facade';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'app-course-info',
@@ -11,16 +12,13 @@ import { CoursesService } from 'src/app/services/courses.service';
 })
 export class CourseInfoComponent implements OnInit {
     @Input() id!: string;
-    @Input() title!: string;
-    @Input() description!: string;
-    @Input() creationDate!: Date;
-    @Input() duration!: number;
-    @Input() authors!: string[];
+    course$!: Observable<Course | null>;
+
 
     constructor(
         private route: ActivatedRoute,
         private location: Location,
-        private coursesService: CoursesService // Inject CoursesService
+        private coursesFacade: CoursesFacade
     ) { }
 
     ngOnInit(): void {
@@ -29,16 +27,8 @@ export class CourseInfoComponent implements OnInit {
     }
 
     loadCourseData(courseId: string): void {
-        this.coursesService.getCourse(courseId).subscribe(({ result: course}: any) => {
-            if (course) {
-                console.log(course);
-                this.title = course.title;
-                this.description = course.description;
-                this.creationDate = new Date(course.creationDate);
-                this.duration = course.duration;
-                this.authors = course.authors; // Adjust if using author names
-            }
-        });
+        this.coursesFacade.getSingleCourse(courseId);
+        this.course$ = this.coursesFacade.course$;
     }
 
     goBack(): void {

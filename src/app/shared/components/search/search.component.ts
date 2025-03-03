@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { CoursesService } from 'src/app/services/courses.service';
+import { CoursesFacade } from 'src/app/store/courses/courses.facade';
 import { Course } from 'src/app/models/course.model';
-
 
 @Component({
     selector: 'app-search',
@@ -10,35 +9,13 @@ import { Course } from 'src/app/models/course.model';
 })
 export class SearchComponent {
     @Input() placeholder: string = 'Search...';
-
-    @Output() searchResults = new EventEmitter<Course[]>(); // Emit filtered courses
+    @Output() searchResults = new EventEmitter<Course[]>();
 
     searchText: string = '';
 
-    duration: string[] = [];
-    creationDate = [];
-    description = [];
-    title = [];
-
-    constructor(private coursesService: CoursesService) { }
+    constructor(private coursesFacade: CoursesFacade) { }
 
     onSearch(): void {
-        if (
-            this.duration.length === 0 &&
-            this.creationDate.length === 0 &&
-            this.description.length === 0 &&
-            this.title.length === 0
-    ) {
-            this.coursesService.getAll().subscribe({
-                next: (courses) => this.searchResults.emit(courses),
-                error: (err) => console.error('Error fetching courses:', err)
-            });
-        } else {
-            this.coursesService.filterCourses(this.duration, this.creationDate, this.description, this.title).subscribe({
-                next: (filteredCourses) => this.searchResults.emit(filteredCourses),
-                error: (err) => console.error('Search failed:', err)
-            });
-        }
+        this.coursesFacade.getFilteredCourses(this.searchText);
     }
-
 }

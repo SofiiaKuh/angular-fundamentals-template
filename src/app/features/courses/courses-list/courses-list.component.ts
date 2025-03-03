@@ -1,8 +1,9 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { CoursesService } from 'src/app/services/courses.service';
+import { CoursesFacade } from 'src/app/store/courses/courses.facade';
 import { Course } from 'src/app/models/course.model';
 import { UserStoreService } from 'src/app/user/services/user-store.service';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'app-course-list',
@@ -10,16 +11,18 @@ import { UserStoreService } from 'src/app/user/services/user-store.service';
     styleUrls: ['./courses-list.component.css']
 })
 export class CourseListComponent {
-    @Input() courses: Course[] = [];
+    courses$: Observable<Course[]>;
     @Input() editable = false;
 
     isAdmin: boolean = false;
 
     constructor(
-        private coursesService: CoursesService,
+        private coursesFacade: CoursesFacade,
         private userService: UserStoreService,
         private router: Router // Inject Router
-    ) { }
+    ) {
+        this.courses$ = this.coursesFacade.allCourses$;
+    }
 
     ngOnInit(): void {
         this.loadCourses();
@@ -29,9 +32,9 @@ export class CourseListComponent {
     }
 
     loadCourses(): void {
-        this.coursesService.getAll().subscribe((courses: any) => {
-            console.log(courses);
-            this.courses = courses.result;
+        this.coursesFacade.getAllCourses(); // Dispatch action to fetch courses
+        this.userService.isAdmin$.subscribe((isAdmin) => {
+            this.isAdmin = isAdmin;
         });
     }
 
@@ -44,8 +47,6 @@ export class CourseListComponent {
     }
 
     onDeleteCourse(id: string): void {
-        this.coursesService.deleteCourse(id).subscribe(() => {
-            this.loadCourses(); // Refresh course list after deletion
-        });
+        this.coursesFacade.deleteCourse(id);
     }
 }

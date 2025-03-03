@@ -1,10 +1,10 @@
-<div class="course-info">
-    <h2>{{ title }}</h2>
-    <p>{{ description }}</p>
-    <p><strong>ID:</strong> {{ id }}</p>
-    <p><strong>Created:</strong> {{ creationDate | date }}</p>
-    <p><strong>Duration:</strong> {{ duration }} min</p>
-    <p><strong>Authors:</strong> {{ authors?.join(', ') }}</p>
+<div class="course-info" *ngIf="course$ | async as course">
+    <h2>{{ course.title }}</h2>
+    <p>{{ course.description }}</p>
+    <p><strong>ID:</strong> {{ course.id }}</p>
+    <p><strong>Created:</strong> {{ course.creationDate | date }}</p>
+    <p><strong>Duration:</strong> {{ course.duration }} min</p>
+    <p><strong>Authors:</strong> {{ course.authors.join(', ') }}</p>
 
     <button (click)="goBack()">Back</button>
 </div>
