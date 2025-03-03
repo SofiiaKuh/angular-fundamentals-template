@@ -29,6 +29,7 @@ export class CourseListComponent {
         this.userService.isAdmin$.subscribe((isAdmin) => {
             this.isAdmin = isAdmin;
         });
+
     }
 
     loadCourses(): void {

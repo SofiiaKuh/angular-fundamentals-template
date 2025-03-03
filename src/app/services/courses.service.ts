@@ -12,8 +12,8 @@ export class CoursesService {
     constructor(private http: HttpClient) { }
 
     // Get all courses
-    getAll(): Observable<any[]> {
-        return this.http.get<any[]>(`${this.apiUrl}/courses/all`);
+    getAll(): Observable<any> {
+        return this.http.get<any>(`${this.apiUrl}/courses/all`);
     }
 
     // Create a new course
@@ -36,22 +36,22 @@ export class CoursesService {
         return this.http.delete<void>(`${this.apiUrl}/courses/${id}`);
     }
 
-    filterCourses(duration: string[], creationDate: string[], description: string[], title: string[]): Observable<any[]> {
+    filterCourses(duration: string[], creationDate: string[], description: string[], title: string[]): Observable<any> {
         let params = new HttpParams();
 
         duration.forEach(value => { params = params.append('duration', value); });
         creationDate.forEach(value => { params = params.append('creationDate', value); });
         description.forEach(value => { params = params.append('description', value); });
         title.forEach(value => { params = params.append('title', value); });
-        return this.http.get<any[]>(`${this.apiUrl}/courses/filter`, { params }).pipe(
+        return this.http.get<any>(`${this.apiUrl}/courses/filter`, { params }).pipe(
             map((response: any) => response || []) // Ensure it always returns an array
         );
     }
 
 
     // Get all authors
-    getAllAuthors(): Observable<any[]> {
-        return this.http.get<any[]>(`${this.apiUrl}/authors/all`);
+    getAllAuthors(): Observable<any> {
+        return this.http.get<any>(`${this.apiUrl}/authors/all`);
     }
 
     // Create a new author
